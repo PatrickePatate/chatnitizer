@@ -6,7 +6,7 @@ Refer to Tester.php<br/>
 ```php
 $chatnitizer = new Chatnitizer("mode","data_to_sanitize");
 ```
-where mode can be ``email, string, url, input, number, removehtml, phone``<br /><br />
+where mode can be ``email, string, url, input, number, removehtml, phone, float, trim``<br /><br />
 You can also *pipe* modes to proceed multi-sanitizing at once :
 ```php
 $chatnitizer = new Chatnitizer("mode1|mode2|mode3|...","data_to_sanitize");

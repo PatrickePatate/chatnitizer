@@ -6,7 +6,7 @@ class Chatnitizer
     private $sanitized = "";
 
     /**
-     * @param $mode email|string|url|input|number|removehtml|phone (support for pipe -> multiples test at once)
+     * @param $mode email|string|url|input|number|removehtml|phone|float|trim (support for pipe -> multiples test at once)
      * @param $string
      */
     public function __construct($mode, $string)
@@ -83,6 +83,16 @@ class Chatnitizer
             return false;
         }
 
+    }
+
+    protected function trim(){
+        $str = trim($this->toSanitize);
+        return $str;
+    }
+
+    protected function float(){
+        $str = filter_var($this->toSanitize, FILTER_SANITIZE_NUMBER_FLOAT);
+        return $str;
     }
 
     protected function number(){
