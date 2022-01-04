@@ -48,7 +48,7 @@ class Chatnitizer
     }
 
     protected function string(){
-        return htmlspecialchars($this->toSanitize);
+        return htmlspecialchars( $this->toSanitize, ENT_NOQUOTES | ENT_HTML5 | ENT_SUBSTITUTE, 'UTF-8', /*double_encode*/false );
     }
 
     protected function url(){
