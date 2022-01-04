@@ -6,7 +6,7 @@ class Chatnitizer
     private $sanitized = "";
 
     /**
-     * @param $mode email|string|url|input|number|removehtml (support for pipe -> multiples test at once)
+     * @param $mode email|string|url|input|number|removehtml|phone|float|trim (support for pipe -> multiples test at once)
      * @param $string
      */
     public function __construct($mode, $string)
@@ -30,6 +30,12 @@ class Chatnitizer
     public function toString(){
         return $this->sanitized;
     }
+    // Alias that is more logic cause email and phone can return false
+    public function getValue(){
+        return $this->sanitized;
+    }
+
+
     protected function email(){
         //sanitize email
         $email = filter_var($this->toSanitize, FILTER_SANITIZE_EMAIL);
@@ -66,6 +72,26 @@ class Chatnitizer
     // remove or encode special characters
     protected function input(){
         $str = filter_var($this->toSanitize, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_HIGH);
+        return $str;
+    }
+
+    protected function phone(){
+        if (preg_match("/\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/", $this->toSanitize)) {
+            $this->sanitized = $this->toSanitize;
+            return $this->toSanitize;
+        }else{
+            return false;
+        }
+
+    }
+
+    protected function trim(){
+        $str = trim($this->toSanitize);
+        return $str;
+    }
+
+    protected function float(){
+        $str = filter_var($this->toSanitize, FILTER_SANITIZE_NUMBER_FLOAT);
         return $str;
     }
 
